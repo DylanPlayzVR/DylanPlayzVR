@@ -14,3 +14,6 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+## Keep Reading!!
+I made this HTML project to represent me and what I do. This project I have coded will not be open to the public for other users or people to distribute my code or projects.
+  This code was only intended to show what I do, and how I do things. If you have any questions or want to learn more on what I do online, (not personal info), or any other things, please visit the Contact page of my website to see how I can be contacted.
