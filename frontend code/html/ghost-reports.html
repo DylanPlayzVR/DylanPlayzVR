@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorilla Corp Terminal</title>
+    <link rel="stylesheet" href="/frontend code/css/ghost-reports.css">
+</head>
+<body class="terminal-body">
+
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="ghost-reports.html">The Gorilla Corp Terminal</a>
+            <a href="cosmetics.html">Cosmetics Pack</a>
+        </nav>
+    </header>
+
+    <main class="terminal-container">
+        <h1>Gorilla Corp Monitoring Dashboard</h1>
+
+        <section class="terminal-card audio-section">
+            <h2>Intercepted Audio Log</h2>
+            <button id="play-audio-btn">Play message from Dylan</button>
+            <audio id="terminal-audio" src="/frontend code/assets/audio-message.mp3"></audio>
+            <div class="visualizer-container">
+                <canvas id="visualizer"></canvas>
+            </div>
+        </section>
+
+        <section class="terminal-card drill-section">
+            <h2>Drill Operation Status</h2>
+
+            <div class="status-display">
+                <p>System Status: <span id="drill-status" class="status-idle">IDLE</span></p>
+                <p>Current dDepth: <span id="drill-depth">1000m</span></p>
+            </div>
+
+            <div class="control-panel">
+                <button id="reset-drill-btn" class="danger-btn">EMERGENCY RESET (1000m)</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="/frontend code/js/drill.js"></script>
+</body>
+</html>
