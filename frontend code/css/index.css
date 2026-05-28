@@ -1,6 +1,6 @@
 /* --- GLOBAL STYLES --- */
 :root {
-    --vr-color: #2a7542; /* CHANGE THIS TO YOUR EXACT GORILLA TAG COLOR CODE */
+    --vr-color: #8e00ff; /* CHANGE THIS TO YOUR EXACT GORILLA TAG COLOR CODE */
     --dark-bg: #121212;
     --card-bg: #1e1e1e;
     --text-color: #ffffff;
@@ -132,6 +132,14 @@ main {
     border-color: var(--accent-red);
 }
 
+.corp-logo {
+    display: block;
+    max-width: 120px;
+    height: auto;
+    margin: 0 auto 15px auto;
+    filter: drop-shadow(0 0 5px rgba(31, 77, 31, 0.6));
+}
+
 /* --- VIDEO GRID --- */
 .video-grid {
     display: flex;
@@ -144,6 +152,14 @@ main {
     padding: 15px;
     border-radius: 6px;
     text-align: center;
+}
+
+.video-card iframe {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 4px;
 }
 
 .video-placeholder {

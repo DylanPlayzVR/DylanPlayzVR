@@ -1,0 +1,258 @@
+/* --- GLOBAL STYLES --- */
+:root {
+    --vr-color: #8e00ff; /* CHANGE THIS TO YOUR EXACT GORILLA TAG COLOR CODE */
+    --dark-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #ffffff;
+    --accent-red: #ff3333;
+    --accent-orange: #ff9900;
+    --accent-green: #33cc33;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace; /* Fits the tech/retro vibe */
+    background: radial-gradient(circle, var(--vr-color) 0%, var(--dark-bg) 100%);
+    background-attachment: fixed;
+    color: var(--text-color);
+}
+
+/* --- NAVIGATION --- */
+header {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+nav a.active, nav a:hover {
+    color: var(--accent-orange);
+    border-bottom: 2px solid var(--accent-orange);
+}
+
+/* --- PRELOADER ANIMATION --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--dark-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+#preloader.dropped {
+    transform: translateY(100vh);
+}
+
+.loader-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinning-circle {
+    width: 100%;
+    height: 100%;
+    border: 6px solid rgba(255, 255, 255, 0.1);
+    border-top: 6px solid var(--vr-color);
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+    position: absolute;
+}
+
+.loader-pfp {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: spin 6s linear infinite; /* PFP rotates inside along with it */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- MAIN INDEX LAYOUT --- */
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+#hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+#hero h1 {
+    font-size: 3.5rem;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px var(--vr-color);
+}
+
+.bio {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+#info-split {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.card {
+    flex: 1;
+    background: rgba(30, 30, 30, 0.85);
+    padding: 25px;
+    border-radius: 8px;
+    border: 2px solid var(--vr-color);
+}
+
+.ghost-reactor {
+    border-color: var(--accent-red);
+}
+
+.corp-logo {
+    display: block;
+    max-width: 120px;
+    height: auto;
+    margin: 0 auto 15px auto;
+    filter: drop-shadow(0 0 5px rgba(31, 77, 31, 0.6));
+}
+
+/* --- VIDEO GRID --- */
+.video-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.video-card {
+    flex: 1;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.video-card iframe {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 4px;
+}
+
+.video-placeholder {
+    background: #000;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+    border-radius: 4px;
+}
+
+/* --- GORILLA CORP TERMINAL PAGE --- */
+.terminal-body {
+    background: #050a05; /* Deep command-center terminal green background */
+}
+
+.terminal-card {
+    background: #0a140a;
+    border: 2px solid #1f4d1f;
+    padding: 30px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 15px rgba(0, 200, 0, 0.1);
+}
+
+/* System State Colors */
+.status-drilling { color: var(--accent-orange); font-weight: bold; text-shadow: 0 0 8px var(--accent-orange); }
+.status-idle { color: var(--accent-green); font-weight: bold; text-shadow: 0 0 8px var(--accent-green); }
+.status-boss { color: var(--accent-red); font-weight: bold; animation: pulse 1s infinite; }
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* Canvas / Audio Layout */
+canvas {
+    width: 100%;
+    height: 100px;
+    background: #000;
+    margin-top: 15px;
+    border-radius: 4px;
+}
+
+button {
+    background: #1f4d1f;
+    color: #fff;
+    border: 1px solid #3f9d3f;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+button:hover { background: #2d722d; }
+
+.danger-btn {
+    background: #4d1f1f;
+    border: 1px solid #9d3f3f;
+}
+.danger-btn:hover { background: #722d2d; }
+
+.terminal-console {
+    background: #000000;
+    border: 1px solid #1f4d1f;
+    padding: 15px;
+    height: 120px;
+    overflow-y: auto;
+    margin: 20px 0;
+    font-size: 0.9rem;
+    color: #33cc33;
+    text-align: left;
+    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.terminal-console::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-console::-webkit-scrollbar-thumb {
+    background: #1f4d1f;
+}
+
+.visualizer-container {
+    background: #000;
+    border: 1px solid #1f4d1f;
+    margin-top: 15px;
+    padding: 5px;
+}
+
+#visualizer {
+    display: block;
+    width: 100%;
+    height: 80px;
+}

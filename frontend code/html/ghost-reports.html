@@ -22,7 +22,7 @@
         <section class="terminal-card audio-section">
             <h2>Intercepted Audio Log</h2>
             <button id="play-audio-btn">Play message from Dylan</button>
-            <audio id="terminal-audio" src="/frontend code/assets/audio-message.mp3"></audio>
+            <audio id="terminal-audio" src="/frontend code/assets/GhostReactorEvacuation.ogg"></audio>
             <div class="visualizer-container">
                 <canvas id="visualizer"></canvas>
             </div>
@@ -33,7 +33,11 @@
 
             <div class="status-display">
                 <p>System Status: <span id="drill-status" class="status-idle">IDLE</span></p>
-                <p>Current dDepth: <span id="drill-depth">1000m</span></p>
+                <p>Current Depth: <span id="drill-depth">1000m</span></p>
+            </div>
+
+            <div class="terminal-console">
+                <div id="console-feed">> Gorilla Corp OS v1.0.4 Initalized...</div>
             </div>
 
             <div class="control-panel">
