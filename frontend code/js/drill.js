@@ -2,7 +2,7 @@
 let currentDepth = 1000;
 let currentMilestone = 1000; 
 let systemState = 'idle'; // Options: 'idle', 'drilling', 'boss'
-let bossType = 'MONKEYE';
+let bossType = '';
 
 // Interval/Timeout trackers to prevent overlapping loops
 let digIntervalHandle = null;
@@ -13,16 +13,25 @@ const depthText = document.getElementById('drill-depth');
 const resetBtn = document.getElementById('reset-drill-btn');
 const consoleFeed = document.getElementById('console-feed');
 
-// Audio Variables (Declared cleanly exactly once)
+// Audio Variables (Cleanly mapped and assigned)
 const playBtn = document.getElementById('play-audio-btn');
 const audioFile = document.getElementById('terminal-audio');
 const canvas = document.getElementById('visualizer');
+
+// Volume Slider Control Elements
+const volumeSlider = document.getElementById('volume-slider');
+const volumePercent = document.getElementById('volume-percent');
 
 let audioContext;
 let analyser;
 let source;
 let dataArray;
 let bufferLength;
+
+// Set initial audio volume based on default slider value
+if (audioFile && volumeSlider) {
+    audioFile.volume = volumeSlider.value;
+}
 
 // Helper function to print messages to the terminal console
 function logToConsole(message) {
@@ -33,52 +42,68 @@ function logToConsole(message) {
     }
 }
 
-// --- MAIN SYSTEM CONTROLLER ---
+// --- MAIN SYSTEM CONTROLLER (RUNS EXACTLY EVERY 1 MINUTE) ---
 function processNextSystemState() {
     clearTimeout(stateTimeoutHandle);
-    const roll = Math.random();
+    clearInterval(digIntervalHandle);
 
-    if (roll < 0.5) {
-        startDrillingSequence();
-    } else if (roll < 0.8) {
-        systemState = 'idle';
-        statusText.innerText = "SYSTEM IDLE";
-        statusText.className = "status-idle";
-        depthText.innerText = currentMilestone + "m";
-        logToConsole(`STATUS: Operational systems stable. Standing by at ${currentMilestone}m.`);
-        stateTimeoutHandle = setTimeout(processNextSystemState, 6000);
-    } else {
+    // Look AHEAD to see what the next depth block would be
+    let nextTarget = currentMilestone + 1000;
+
+    if ([4000, 9000, 14000, 19000, 24000, 29000].includes(nextTarget)) {
         systemState = 'boss';
-        bossType = bossType === 'MONKEYE' ? 'METEOR MONSTER' : 'MONKEYE';
-        statusText.innerText = `[CRITICAL: ${bossType} DETECTED]`;
+        bossType = 'Monkeye';
+        statusText.innerText = `[CRITICAL: ${bossType.toUpperCase()} DETECTED]`;
         statusText.className = "status-boss";
-        logToConsole(`WARNING: Severe seismic activity. Entity [${bossType}] detected nearby. Operations halted.`);
-        stateTimeoutHandle = setTimeout(processNextSystemState, 10000);
+        
+        // Lock progression numbers completely right on the milestone target
+        currentMilestone = nextTarget;
+        currentDepth = currentMilestone;
+        depthText.innerText = currentDepth + "m";
+        
+        logToConsole(`WARNING: Severe seismic activity. Entity [${bossType}] detected lurking near ${currentMilestone}m. Operations halted.`);
+
+        // Hold systems frozen in position for a 1-minute window
+        stateTimeoutHandle = setTimeout(processNextSystemState, 60000);
+        
+    } else if ([5000, 11000, 30000, 31000].includes(nextTarget)) {
+        systemState = 'boss';
+        bossType = 'Meteor Monster';
+        statusText.innerText = `[CRITICAL: ${bossType.toUpperCase()} DETECTED]`;
+        statusText.className = "status-boss";
+        
+        // Lock progression numbers completely right on the milestone target
+        currentMilestone = nextTarget;
+        currentDepth = currentMilestone;
+        depthText.innerText = currentDepth + "m";
+        
+        logToConsole(`ALERT: High-thermal radioactive mass signature. [${bossType}] blocking sector ${currentMilestone}m. Operations halted.`);
+
+        // Hold systems frozen in position for a 1-minute window
+        stateTimeoutHandle = setTimeout(processNextSystemState, 60000);
+        
+    } else {
+        // Safe zone: Progress milestone target and start the mechanical movement loops
+        currentMilestone = nextTarget;
+        startDrillingSequence();
     }
 }
 
-// --- DRILLING SEQUENCE ---
 // --- DRILLING SEQUENCE (EXACTLY 50 SECONDS PER 1000M) ---
 function startDrillingSequence() {
     systemState = 'drilling';
     statusText.innerText = "ACTIVELY DIGGING...";
     statusText.className = "status-drilling";
-    
-    currentMilestone += 1000;
-    logToConsole(`CAUTION: Drill engaged. Target depth set to ${currentMilestone}m.`);
+    logToConsole(`CAUTION: Drill engaged. Deep-rock structural penetration set to target depth: ${currentMilestone}m.`);
 
-    // Clear any dangling interval before creating a new one
-    clearInterval(digIntervalHandle);
-
-    // 100ms per tick means 10 ticks per second. 
-    // Over 50 seconds, that's exactly 500 ticks. 1000m / 500 ticks = exactly 2m per tick.
-    const metersPerTick = 2; 
+    // Math balanced for 50 seconds trip: 100ms interval = 10 ticks per sec = 500 total ticks.
+    // 1000m / 500 ticks = exactly 20 meters added per interval tick loop.
+    const metersPerTick = 20;
 
     digIntervalHandle = setInterval(() => {
         if (systemState === 'drilling' && currentDepth < currentMilestone) {
-            currentDepth += metersPerTick; 
-            
-            // Safety cap to ensure it lands perfectly on the milestone number
+            currentDepth += metersPerTick;
+
             if (currentDepth >= currentMilestone) {
                 currentDepth = currentMilestone;
                 clearInterval(digIntervalHandle);
@@ -88,7 +113,7 @@ function startDrillingSequence() {
         } else {
             clearInterval(digIntervalHandle);
         }
-    }, 100); // Ticks every 100 milliseconds
+    }, 100);
 }
 
 function triggerIdleState() {
@@ -96,11 +121,13 @@ function triggerIdleState() {
     statusText.innerText = "SYSTEM IDLE";
     statusText.className = "status-idle";
     depthText.innerText = currentMilestone + "m";
-    logToConsole(`STATUS: Target depth reached. Drill idling at ${currentMilestone}m.`);
-    stateTimeoutHandle = setTimeout(processNextSystemState, 7000);
+    logToConsole(`STATUS: Baseline target reached successfully. Drill idling at ${currentMilestone}m.`);
+    
+    // Wait out the remaining 10 seconds of the structural minute cycle
+    stateTimeoutHandle = setTimeout(processNextSystemState, 10000);
 }
 
-// Kick off drill loop
+// Kick off drill loop initialization delay
 stateTimeoutHandle = setTimeout(processNextSystemState, 2000);
 
 // --- MANUAL DRILL OVERRIDE ---
@@ -135,6 +162,17 @@ if (playBtn && audioFile) {
             audioFile.pause();
             playBtn.innerText = "Play Message from Dylan";
             logToConsole("AUDIO: Transmission paused by user.");
+        }
+    });
+}
+
+// Dynamic Slider Input Event Hook
+if (volumeSlider && audioFile) {
+    volumeSlider.addEventListener('input', (e) => {
+        const currentVol = e.target.value;
+        audioFile.volume = currentVol;
+        if (volumePercent) {
+            volumePercent.textContent = `${Math.round(currentVol * 100)}%`;
         }
     });
 }
