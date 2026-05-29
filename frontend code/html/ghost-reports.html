@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gorilla Corp Terminal</title>
-    <link rel="stylesheet" href="/frontend code/css/ghost-reports.css">
+    <link rel="stylesheet" href="../css/ghost-reports.css">
 </head>
 
 <body class="terminal-body">
 
     <header>
         <nav>
-            <a href="/index.html">Home</a>
-            <a href="ghost-reports.html">The Gorilla Corp Terminal</a>
+            <a href="../../index.html">Home</a>
+            <a href="ghost-reports.html" class="active">The Gorilla Corp Terminal</a>
             <a href="cosmetics.html">Cosmetics Pack</a>
         </nav>
     </header>
@@ -27,11 +27,11 @@
             
             <div class="volume-mixer">
                 <label for="volume-slider">VOLUME:</label>
-                <input type="range" id="volume-slider" min="0" max="1" step="0.1", value="0.5">
-                <span id="volume-percent">100%</span>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+                <span id="volume-percent">50%</span>
             </div>
-            
-            <audio id="terminal-audio" src="/frontend code/assets/GhostReactorEvacuation.ogg"></audio>
+
+            <audio id="terminal-audio" src="../assets/GhostReactorEvacuation.ogg"></audio>
             <div class="visualizer-container">
                 <canvas id="visualizer"></canvas>
             </div>
@@ -55,7 +55,7 @@
         </section>
     </main>
 
-    <script src="/frontend code/js/drill.js"></script>
+    <script src="../js/drill.js"></script>
 </body>
 
 </html>
